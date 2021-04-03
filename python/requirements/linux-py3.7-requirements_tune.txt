@@ -479,7 +479,7 @@ plotly==4.14.3
     # via ax-platform
 pluggy==0.13.1
     # via pytest
-portalocker==2.0.0
+portalocker==2.3.0
     # via gluoncv
 prettytable==0.7.2
     # via cliff
