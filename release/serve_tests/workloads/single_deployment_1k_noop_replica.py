@@ -87,6 +87,7 @@ def deploy_replicas(num_replicas, max_batch_size):
         except RuntimeError:
             logger.info("Deployment is still unhealthy, waiting 10 seconds...")
             time.sleep(10)
+            pass
 
     # to be raised and let this test fail.
     client._wait_for_deployment_healthy(name)
