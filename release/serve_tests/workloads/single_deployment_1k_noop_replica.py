@@ -79,12 +79,14 @@ def deploy_replicas(num_replicas, max_batch_size):
     client = _get_global_client()
     # Wait for up to 10 minutes for the deployment to be healthy, allowing
     # time for any actors that crashed to restart.
+    logger.info("Waiting up to 10 minutes for deployment to become healthy.")
     while time.time() - start < 10 * 60:
         try:
             # Raises RuntimeError if deployment enters the "UNHEALTHY" state.
             client._wait_for_deployment_healthy(name)
         except RuntimeError:
-            time.sleep(1)
+            logger.info("Deployment is still unhealthy, waiting 10 seconds...")
+            time.sleep(10)
             pass
 
     # If the deployment is still unhealthy at this point, allow RuntimeError
