@@ -18,7 +18,7 @@ class ProgressActor:
         )
 
     def raise_error_for_testing(self) -> None:
-        raise Exception("Made-up error for Task 3. To fix, just delete this line.")
+        raise Exception("Made-up error. To fix, just replace this line with `pass`.")
 
 
 @ray.remote
