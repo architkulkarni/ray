@@ -5,8 +5,8 @@ import emoji
 from compute_pi_utils import ProgressActor, sampling_task
 
 # Change this to match your cluster scale.
-NUM_SAMPLING_TASKS = os.getenv("NUM_SAMPLING_TASKS", 10)
-NUM_SAMPLES_PER_TASK = os.getenv("NUM_SAMPLES_PER_TASK", 10_000_000)
+NUM_SAMPLING_TASKS = os.getenv("NUM_SAMPLING_TASKS", 2)
+NUM_SAMPLES_PER_TASK = os.getenv("NUM_SAMPLES_PER_TASK", 100_000)
 TOTAL_NUM_SAMPLES = NUM_SAMPLING_TASKS * NUM_SAMPLES_PER_TASK
 
 print("Using {} sampling tasks".format(NUM_SAMPLING_TASKS))
@@ -38,5 +38,5 @@ while True:
 total_num_inside = sum(ray.get(results))
 pi = (total_num_inside * 4) / TOTAL_NUM_SAMPLES
 print(f"Estimated value of π is: {pi}")
-result = emoji.emojize('Ray is :thumbs_up:')
+result = emoji.emojize('Ray is good :thumbs_up:')
 print(result)

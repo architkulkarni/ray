@@ -32,6 +32,9 @@ def sampling_task(num_samples: int, task_id: int,
         if (i + 1) % 1_000_000 == 0:
             # This is async.
             progress_actor.report_progress.remote(task_id, i + 1)
+        
+        if (i + 1) % (num_samples // 4) == 0:
+            print("WARNING: Made-up warning. If you're on Task 2, trigger an alert")
 
     # Report the final progress.
     progress_actor.report_progress.remote(task_id, num_samples)
