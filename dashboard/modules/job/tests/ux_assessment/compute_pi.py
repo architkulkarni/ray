@@ -38,5 +38,5 @@ while True:
 total_num_inside = sum(ray.get(results))
 pi = (total_num_inside * 4) / TOTAL_NUM_SAMPLES
 print(f"Estimated value of π is: {pi}")
-result = emoji.emojize('Ray is good :thumbs_up:')
+result = emoji.emojize("Ray is good :thumbs_up:")
 print(result)

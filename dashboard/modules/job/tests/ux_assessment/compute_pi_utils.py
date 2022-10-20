@@ -2,6 +2,7 @@ import ray
 import math
 import random
 
+
 @ray.remote
 class ProgressActor:
     def __init__(self, total_num_samples: int):
@@ -19,9 +20,11 @@ class ProgressActor:
     def raise_error_for_testing(self) -> None:
         raise Exception("This is an error for testing.")
 
+
 @ray.remote
-def sampling_task(num_samples: int, task_id: int,
-                  progress_actor: ray.actor.ActorHandle) -> int:
+def sampling_task(
+    num_samples: int, task_id: int, progress_actor: ray.actor.ActorHandle
+) -> int:
     num_inside = 0
     for i in range(num_samples):
         x, y = random.uniform(-1, 1), random.uniform(-1, 1)
@@ -32,7 +35,7 @@ def sampling_task(num_samples: int, task_id: int,
         if (i + 1) % 1_000_000 == 0:
             # This is async.
             progress_actor.report_progress.remote(task_id, i + 1)
-        
+
         if (i + 1) % (num_samples // 4) == 0:
             print("WARNING: Made-up warning. If you're on Task 2, trigger an alert")
 
