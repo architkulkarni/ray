@@ -363,5 +363,24 @@ def test_jobs_run_on_head_by_default_E2E(ray_start_cluster_head_with_env_vars):
     ]
 
 
+def test_no_logs_streamed_to_raylet(shutdown_only, capsys):
+    """Tests that no logs are streamed to the raylet or driver."""
+    ray.init()
+
+    client = JobSubmissionClient()
+    client.submit_job(entrypoint="echo hi", submission_id="job_1")
+
+    # Use capsys to get the logs
+
+    captured = capsys.readouterr()
+
+    # Check that stdout/err doesn't contain job logs. Check for the string "job_1"
+    # and "job_manager" because they're unlikely to appear in other logs.
+    assert "job_1" not in captured.out
+    assert "job_1" not in captured.err
+    assert "job_manager" not in captured.out
+    assert "job_manager" not in captured.err
+
+
 if __name__ == "__main__":
     sys.exit(pytest.main(["-v", __file__]))
