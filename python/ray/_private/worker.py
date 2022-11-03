@@ -1194,6 +1194,7 @@ def init(
     if configure_logging:
         setup_logger(logging_level, logging_format or ray_constants.LOGGER_FORMAT)
 
+    logger.error("Logging from the start of ray.init()")
     # Parse the hidden options:
     _enable_object_reconstruction: bool = kwargs.pop(
         "_enable_object_reconstruction", False
@@ -1346,9 +1347,15 @@ def init(
 
     redis_address, gcs_address = None, None
     bootstrap_address = services.canonicalize_bootstrap_address(address, _temp_dir)
+    logger.error("Logging before checking bootstrap address")
     if bootstrap_address is not None:
         gcs_address = bootstrap_address
-        logger.info("Connecting to existing Ray cluster at address: %s...", gcs_address)
+
+        logger.info(
+            "Connecting to existing Ray clusterrrr at address: %s...", gcs_address
+        )
+        # Print all kwargs for debugging
+        logger.info("ray.init arguments: %s", locals())
 
     if local_mode:
         driver_mode = LOCAL_MODE

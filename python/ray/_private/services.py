@@ -1540,6 +1540,7 @@ def start_raylet(
         command.append(
             f"--node-name={node_name}",
         )
+    # raise ValueError("Starting Ray with command: {}".format(" ".join(command)))
     process_info = start_ray_process(
         command,
         ray_constants.PROCESS_TYPE_RAYLET,

@@ -267,14 +267,21 @@ def init_ray_and_catch_exceptions() -> Callable:
                         )
                         # Init ray without logging to driver
                         # to avoid infinite logging issue.
+                        logger.error("About to initialize Ray from init_ray decorator")
+                        # Log the entire env for debugging
+                        logger.error("Environment: %s", os.environ)
                         ray.init(
                             address=address,
+                            # logging_level=logging.ERROR, # (logging_level *does* work)
                             log_to_driver=False,
                             namespace=RAY_INTERNAL_DASHBOARD_NAMESPACE,
                         )
+                        logger.error("Just initialized Ray with no logging to driver")
                     except Exception as e:
                         ray.shutdown()
                         raise e from None
+                else:
+                    logger.error("Ray is already initialized")
                 return await f(self, *args, **kwargs)
             except Exception as e:
                 logger.exception(f"Unexpected error in handler: {e}")

@@ -142,6 +142,7 @@ class DashboardAgent:
         assert _internal_kv_initialized()
         self.gcs_aio_client = GcsAioClient(address=self.gcs_address)
         self.publisher = GcsAioPublisher(address=self.gcs_address)
+        logger.error("Logging from DashboardAgent init")
 
     async def _configure_http_server(self, modules):
         from ray.dashboard.http_server_agent import HttpServerAgent
@@ -476,6 +477,23 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+
+    def init_ray_and_log():
+        logger.info(f"Current logger: {logger}")
+        logger.info("Info: About to init ray in dashboard agent")
+        logger.error("Error: About to init ray in dashboard agent")
+        ray.init(address=args.gcs_address, log_to_driver=False)
+        import time
+
+        time.sleep(1)
+        logger.info("Info: Just inited ray in dashboard agent")
+        logger.error("Error: Just inited ray in dashboard agent")
+        time.sleep(1)
+        ray.shutdown()
+        time.sleep(1)
+        logger.info("Info: Just shutdown ray in dashboard agent")
+        logger.error("Error: Just shutdown ray in dashboard agent")
+
     try:
         logging_params = dict(
             logging_level=args.logging_level,
@@ -485,7 +503,16 @@ if __name__ == "__main__":
             max_bytes=args.logging_rotate_bytes,
             backup_count=args.logging_rotate_backup_count,
         )
-        setup_component_logger(**logging_params)
+
+        # init_ray_and_log() # Issue persists if we do it here
+        setup_component_logger(
+            **logging_params
+        )  # Issue persists with this line commented out
+        init_ray_and_log()
+        logger.info(
+            "Info: About to do an info log from dashboard/utils.py"
+        )  # This does not get streamed to driver
+        dashboard_utils.do_info_log()  # This does get streamed to driver
 
         agent = DashboardAgent(
             args.node_ip_address,

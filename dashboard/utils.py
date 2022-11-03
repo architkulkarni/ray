@@ -95,6 +95,10 @@ class DashboardHeadModule(abc.ABC):
         return self._dashboard_head.gcs_address
 
 
+def do_info_log():
+    logger.info("Info log from utils.py")
+
+
 def dashboard_module(enable):
     """A decorator for dashboard module."""
 
