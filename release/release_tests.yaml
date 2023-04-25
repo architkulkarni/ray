@@ -5422,7 +5422,7 @@
   env: prod_v1
 
   frequency: nightly
-  team: core
+  team: kuberay-autoscaler
   cluster:
     cluster_env: tests/aws_config.yaml
     cluster_compute: tests/aws_compute.yaml
@@ -5442,7 +5442,7 @@
   env: prod_v1
 
   frequency: nightly
-  team: core
+  team: kuberay-autoscaler
   cluster:
     cluster_env: tests/aws_config.yaml
     cluster_compute: tests/aws_compute.yaml
@@ -5462,7 +5462,7 @@
   env: prod_v1
 
   frequency: nightly
-  team: core
+  team: kuberay-autoscaler
   cluster:
     cluster_env: tests/aws_config.yaml
     cluster_compute: tests/aws_compute.yaml
