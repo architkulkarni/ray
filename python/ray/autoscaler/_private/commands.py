@@ -835,7 +835,7 @@ def get_or_create_head_node(
     with cli_logger.group("Useful commands"):
         printable_config_file = os.path.abspath(printable_config_file)
 
-        cli_logger.print("Shutdown the cluster with")
+        cli_logger.print("Shut down the cluster with")
         cli_logger.print(cf.bold("  ray down {}{}"), printable_config_file, modifiers)
 
         cli_logger.print("Get the IP address of the head node with")
