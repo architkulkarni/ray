@@ -835,20 +835,27 @@ def get_or_create_head_node(
     cli_logger.newline()
     with cli_logger.group("Useful commands"):
         printable_config_file = os.path.abspath(printable_config_file)
-        cli_logger.print("Monitor autoscaling with")
-        cli_logger.print(
-            cf.bold("  ray exec {}{} {}"),
-            printable_config_file,
-            modifiers,
-            quote(monitor_str),
-        )
+        
+        cli_logger.print("Shutdown the cluster with")
+        cli_logger.print(cf.bold("  ray down {}{}"), printable_config_file, modifiers)
 
+        cli_logger.print("Get the IP address of the head node with")
+        cli_logger.print(cf.bold("  ray get_head_ip {}{}"), printable_config_file, modifiers)
+        
         cli_logger.print("Connect to a terminal on the cluster head:")
         cli_logger.print(cf.bold("  ray attach {}{}"), printable_config_file, modifiers)
+
+        cli_logger.print("Automatically set up port forwarding:")
+        cli_logger.print(cf.bold("  ray dashboard {}{}"), printable_config_file, modifiers)
 
         remote_shell_str = updater.cmd_runner.remote_shell_command_str()
         cli_logger.print("Get a remote shell to the cluster manually:")
         cli_logger.print("  {}", remote_shell_str.strip())
+
+        # Adding ray job submit to the useful commands
+        cli_logger.print("Submit a job to the cluster with")
+        cli_logger.print(cf.bold("  ray job submit {}{}"), printable_config_file, modifiers)
+
 
 
 def _should_create_new_head(
