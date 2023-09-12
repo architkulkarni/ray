@@ -593,11 +593,20 @@ def main():
     with open(args.special_token_path, "r") as json_file:
         special_tokens = json.load(json_file)["tokens"]
 
-    assert (
-        "ANYSCALE_ARTIFACT_STORAGE" in os.environ
-    ), "ANYSCALE_ARTIFACT_STORAGE env var must be set!"
-    artifact_storage = os.environ["ANYSCALE_ARTIFACT_STORAGE"]
-    user_name = re.sub(r"\s+", "__", os.environ.get("ANYSCALE_USERNAME", "user"))
+    # assert (
+    #     "ANYSCALE_ARTIFACT_STORAGE" in os.environ
+    # ), "ANYSCALE_ARTIFACT_STORAGE env var must be set!"
+    # artifact_storage = os.environ["ANYSCALE_ARTIFACT_STORAGE"]
+    # user_name = re.sub(r"\s+", "__", os.environ.get("ANYSCALE_USERNAME", "user"))
+    # storage_path = (
+    #     f"{artifact_storage}/{user_name}/ft_llms_with_deepspeed/{args.model_name}"
+    # )
+
+    # Hardcode the S3 bucket name and username here
+    artifact_storage = "s3://archit-finetune-test-bucket"
+    user_name = "archit"
+
+    # Construct the storage_path using the hardcoded bucket name and username
     storage_path = (
         f"{artifact_storage}/{user_name}/ft_llms_with_deepspeed/{args.model_name}"
     )
