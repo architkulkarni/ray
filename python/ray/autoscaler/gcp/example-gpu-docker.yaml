@@ -15,8 +15,8 @@ upscaling_speed: 1.0
 # and opens all the necessary ports to support the Ray cluster.
 # Empty string means disabled.
 docker:
-    image: "rayproject/ray-ml:latest-gpu"
-    # image: rayproject/ray:latest-gpu   # use this one if you don't need ML dependencies, it's faster to pull
+    image: "rayproject/ray:latest-gpu"
+    # image: rayproject/ray-ml:latest-gpu   # use this one if you need ML dependencies, but it's slower to pull
     container_name: "ray_nvidia_docker" # e.g. ray_docker
 
     # # Example of running a GPU head with CPU workers
@@ -101,7 +101,7 @@ available_node_types:
                   sourceImage: projects/ml-images/global/images/c0-deeplearning-common-cu121-v20231209-debian-11
             # Make sure to set scheduling->onHostMaintenance to TERMINATE when GPUs are present
             guestAccelerators:
-              - acceleratorType: nvidia-tesla-t4  # Updated GPU type
+              - acceleratorType: nvidia-tesla-t4
                 acceleratorCount: 1
             metadata:
               items:
